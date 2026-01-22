@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alexa Plus Chatbot - Care Home Assistant Demo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏥 Alexa Plus Chatbot</h1>
+            <p>AI-Powered Care Home Assistant System</p>
+            <div class="tech-info">
+                <span class="tech-badge">Python 3.9+</span>
+                <span class="tech-badge">AWS Lambda</span>
+                <span class="tech-badge">Alexa Skills Kit</span>
+            </div>
+        </header>
+
+        <div class="demo-section">
+            <!-- Main Device (Caregiver Station) -->
+            <div class="main-device">
+                <h2>Main Device (Caregiver Station)</h2>
+                <div class="device echo-show">
+                    <div class="screen">
+                        <div class="notifications" id="main-notifications">
+                            🏥 Care Home Assistant Ready<br>
+                            Monitoring all rooms...
+                        </div>
+                        <button class="confirm-btn" id="confirm-btn" onclick="confirmCall()" style="display: none;">
+                            Say "OK" to Confirm
+                        </button>
+                    </div>
+                </div>
+                <div class="device-info">
+                    <p><strong>Language:</strong> Python Backend</p>
+                    <p><strong>Status:</strong> <span class="status-ready">Ready</span></p>
+                </div>
+            </div>
+
+            <!-- Resident Devices -->
+            <div class="resident-devices">
+                <h2>Resident Devices (Echo Show)</h2>
+                <div class="rooms-grid">
+                    <!-- Room 1 - Jane -->
+                    <div class="room">
+                        <h3>Room 1 - Jane</h3>
+                        <button class="touch-call" onclick="touchCall('Jane', 'Room 1')">
+                            📞 CALL CAREGIVER
+                        </button>
+                        <div class="wake-words">
+                            <button class="help-btn" onclick="helpRequest('Jane', 'Room 1')">
+                                🆘 Say "Help"
+                            </button>
+                            <button class="nurse-btn" onclick="nurseRequest('Jane', 'Room 1')">
+                                👩⚕️ Say "Nurse"
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Room 2 - John -->
+                    <div class="room">
+                        <h3>Room 2 - John</h3>
+                        <button class="touch-call" onclick="touchCall('John', 'Room 2')">
+                            📞 CALL CAREGIVER
+                        </button>
+                        <div class="wake-words">
+                            <button class="help-btn" onclick="helpRequest('John', 'Room 2')">
+                                🆘 Say "Help"
+                            </button>
+                            <button class="nurse-btn" onclick="nurseRequest('John', 'Room 2')">
+                                👩⚕️ Say "Nurse"
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Room 3 - Mary -->
+                    <div class="room">
+                        <h3>Room 3 - Mary</h3>
+                        <button class="touch-call" onclick="touchCall('Mary', 'Room 3')">
+                            📞 CALL CAREGIVER
+                        </button>
+                        <div class="wake-words">
+                            <button class="help-btn" onclick="helpRequest('Mary', 'Room 3')">
+                                🆘 Say "Help"
+                            </button>
+                            <button class="nurse-btn" onclick="nurseRequest('Mary', 'Room 3')">
+                                👩⚕️ Say "Nurse"
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Features -->
+        <div class="features-section">
+            <h2>System Features & Technology</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <h3>🖐️ Touch Call System</h3>
+                    <p><strong>Language:</strong> Python + APL</p>
+                    <p>Residents touch Echo Show screen to instantly call caregivers</p>
+                </div>
+                <div class="feature">
+                    <h3>🆘 Emergency Help</h3>
+                    <p><strong>Wake Word:</strong> "Help"</p>
+                    <p>Voice-activated emergency assistance with priority routing</p>
+                </div>
+                <div class="feature">
+                    <h3>💬 Nurse Communication</h3>
+                    <p><strong>Wake Word:</strong> "Nurse"</p>
+                    <p>Two-way messaging system for specific resident requests</p>
+                </div>
+                <div class="feature">
+                    <h3>📱 Multi-Device Network</h3>
+                    <p><strong>Backend:</strong> AWS Lambda</p>
+                    <p>Centralized notifications routed to caregiver station</p>
+                </div>
+                <div class="feature">
+                    <h3>🔄 Auto-Retry Logic</h3>
+                    <p><strong>Algorithm:</strong> Python</p>
+                    <p>3 attempts before automatic alert to caregiver</p>
+                </div>
+                <div class="feature">
+                    <h3>✅ Confirmation System</h3>
+                    <p><strong>Response:</strong> "OK"</p>
+                    <p>Caregivers confirm receipt with voice acknowledgment</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testing Status -->
+        <div class="testing-section">
+            <h2>Testing Status</h2>
+            <div class="testing-grid">
+                <div class="test-item">
+                    <h3>✅ Local Testing</h3>
+                    <p><strong>Status:</strong> <span class="status-pass">PASS</span></p>
+                    <p>Python unit tests, integration tests, demo website</p>
+                </div>
+                <div class="test-item">
+                    <h3>⚠️ AWS Deployment</h3>
+                    <p><strong>Status:</strong> <span class="status-pending">READY</span></p>
+                    <p>Lambda function ready for deployment</p>
+                </div>
+                <div class="test-item">
+                    <h3>⚠️ Alexa Console</h3>
+                    <p><strong>Status:</strong> <span class="status-pending">READY</span></p>
+                    <p>Skill files ready for upload</p>
+                </div>
+                <div class="test-item">
+                    <h3>⚠️ Echo Show Testing</h3>
+                    <p><strong>Status:</strong> <span class="status-pending">REQUIRES DEVICES</span></p>
+                    <p>Needs physical Echo Show devices</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo Controls -->
+        <div class="demo-controls">
+            <h3>Demo Controls</h3>
+            <div class="controls-grid">
+                <button onclick="resetDemo()">🔄 Reset Demo</button>
+                <button onclick="showStatus()">📊 Show Status</button>
+                <button onclick="testEmergency()">🚨 Test Emergency</button>
+                <button onclick="runTests()">🧪 Run Python Tests</button>
+            </div>
+            <div class="keyboard-shortcuts">
+                <p><strong>Keyboard Shortcuts:</strong></p>
+                <p>Ctrl+1/2/3 (Room calls) | Ctrl+H (Emergency) | Ctrl+R (Reset) | Ctrl+Enter (Confirm)</p>
+            </div>
+        </div>
+
+        <!-- Activity Log -->
+        <div class="activity-log">
+            <h3>System Activity Log</h3>
+            <div id="activity-log" class="log-container">
+                <div class="log-entry">System initialized - Python backend ready</div>
+                <div class="log-entry">All Echo Show devices online</div>
+                <div class="log-entry">Demo website loaded successfully</div>
+            </div>
+        </div>
+
+        <!-- Technical Information -->
+        <div class="tech-section">
+            <h2>Technical Implementation</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <h3>Backend Language</h3>
+                    <p><strong>Python 3.9+</strong></p>
+                    <p>AWS Lambda function with boto3 SDK</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Frontend</h3>
+                    <p><strong>HTML5/CSS3/JavaScript</strong></p>
+                    <p>Alexa Presentation Language (APL)</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Cloud Services</h3>
+                    <p><strong>AWS Lambda, DynamoDB, SNS</strong></p>
+                    <p>Serverless architecture</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Voice Platform</h3>
+                    <p><strong>Amazon Alexa Skills Kit</strong></p>
+                    <p>Custom skill with multi-device support</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="demo.js"></script>
+</body>
+</html>

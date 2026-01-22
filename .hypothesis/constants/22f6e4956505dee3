@@ -1,0 +1,4 @@
+# file: C:\Users\palla\alexa-plus-chatbot-v2\src\fastapi\app\models\user.py
+# hypothesis_version: 6.150.2
+
+['Unique username', 'User email address', 'User password', 'User role', 'admin', 'bearer', 'caregiver', 'supervisor']

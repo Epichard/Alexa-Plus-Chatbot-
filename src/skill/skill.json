@@ -1,0 +1,52 @@
+{
+  "manifest": {
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "uri": "arn:aws:lambda:us-east-1:123456789012:function:AlexaCareAssistant"
+        },
+        "interfaces": [
+          {
+            "type": "ALEXA_PRESENTATION_APL"
+          }
+        ]
+      }
+    },
+    "manifestVersion": "1.0",
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "name": "Care Assistant",
+          "summary": "AI-powered call bell and intercom system for care homes using Python backend",
+          "description": "The Care Assistant skill provides an AI-powered call bell and intercom system for residential care homes. Built with Python 3.9+ backend on AWS Lambda, it supports touch interactions on Echo Show devices, emergency help requests, and nurse communication. The system handles up to 10 rooms with 1-3 caregivers and includes advanced features like auto-retry logic and multi-device messaging.",
+          "keywords": [
+            "care home",
+            "call bell",
+            "intercom",
+            "emergency",
+            "healthcare",
+            "assistant",
+            "python",
+            "echo show"
+          ],
+          "examplePhrases": [
+            "Alexa, open care assistant",
+            "Help",
+            "Nurse, I need water"
+          ]
+        }
+      },
+      "isAvailableWorldwide": false,
+      "testingInstructions": "This skill is designed for use in care homes with Echo Show devices. Test with touch interactions and voice commands. Backend is implemented in Python 3.9+ with AWS Lambda.",
+      "category": "HEALTH_AND_FITNESS",
+      "distributionCountries": ["US"]
+    },
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "usesPersonalInfo": false,
+      "isChildDirected": false,
+      "isExportCompliant": true,
+      "containsAds": false
+    }
+  }
+}

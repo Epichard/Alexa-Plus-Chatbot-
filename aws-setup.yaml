@@ -1,0 +1,227 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Alexa Plus Chatbot - Care Home Intercom System AWS Resources'
+
+Parameters:
+  ProjectName:
+    Type: String
+    Default: 'alexa-care'
+    Description: 'Project name for resource naming'
+
+Resources:
+  # IAM Role for Lambda Function
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${ProjectName}-lambda-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: !Sub '${ProjectName}-lambda-policy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:GetItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                Resource: !GetAtt CallLogsTable.Arn
+              - Effect: Allow
+                Action:
+                  - sns:Publish
+                Resource: !Ref NotificationTopic
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
+
+  # DynamoDB Table for Call Logs
+  CallLogsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-calls'
+      AttributeDefinitions:
+        - AttributeName: call_id
+          AttributeType: S
+        - AttributeName: timestamp
+          AttributeType: S
+        - AttributeName: room
+          AttributeType: S
+      KeySchema:
+        - AttributeName: call_id
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: timestamp-index
+          KeySchema:
+            - AttributeName: timestamp
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: 5
+            WriteCapacityUnits: 5
+        - IndexName: room-index
+          KeySchema:
+            - AttributeName: room
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: 5
+            WriteCapacityUnits: 5
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Purpose
+          Value: 'Call logging for care home intercom'
+
+  # SNS Topic for Device Notifications
+  NotificationTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub '${ProjectName}-notifications'
+      DisplayName: 'Alexa Care Home Notifications'
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Purpose
+          Value: 'Multi-device notifications'
+
+  # CloudWatch Log Group for Lambda
+  LambdaLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${ProjectName}-handler'
+      RetentionInDays: 14
+
+  # CloudWatch Alarms
+  LambdaErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${ProjectName}-lambda-errors'
+      AlarmDescription: 'Lambda function errors'
+      MetricName: Errors
+      Namespace: AWS/Lambda
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub '${ProjectName}-handler'
+      TreatMissingData: notBreaching
+
+  LambdaDurationAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${ProjectName}-lambda-duration'
+      AlarmDescription: 'Lambda function duration'
+      MetricName: Duration
+      Namespace: AWS/Lambda
+      Statistic: Average
+      Period: 300
+      EvaluationPeriods: 2
+      Threshold: 10000
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: FunctionName
+          Value: !Sub '${ProjectName}-handler'
+      TreatMissingData: notBreaching
+
+  # DynamoDB Throttle Alarm
+  DynamoDBThrottleAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${ProjectName}-dynamodb-throttles'
+      AlarmDescription: 'DynamoDB throttled requests'
+      MetricName: ThrottledRequests
+      Namespace: AWS/DynamoDB
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      Dimensions:
+        - Name: TableName
+          Value: !Ref CallLogsTable
+      TreatMissingData: notBreaching
+
+Outputs:
+  LambdaRoleArn:
+    Description: 'ARN of the Lambda execution role'
+    Value: !GetAtt LambdaExecutionRole.Arn
+    Export:
+      Name: !Sub '${ProjectName}-lambda-role-arn'
+
+  DynamoDBTableName:
+    Description: 'Name of the DynamoDB table'
+    Value: !Ref CallLogsTable
+    Export:
+      Name: !Sub '${ProjectName}-table-name'
+
+  SNSTopicArn:
+    Description: 'ARN of the SNS topic'
+    Value: !Ref NotificationTopic
+    Export:
+      Name: !Sub '${ProjectName}-sns-topic-arn'
+
+  LambdaLogGroupName:
+    Description: 'Name of the Lambda log group'
+    Value: !Ref LambdaLogGroup
+    Export:
+      Name: !Sub '${ProjectName}-log-group-name'
+
+  # Configuration for Lambda Environment Variables
+  LambdaEnvironmentConfig:
+    Description: 'Environment variables for Lambda function'
+    Value: !Sub |
+      DYNAMODB_TABLE=${CallLogsTable}
+      SNS_TOPIC_ARN=${NotificationTopic}
+      AWS_REGION=${AWS::Region}
+      PROJECT_NAME=${ProjectName}
+
+  # Quick Deploy Commands
+  DeploymentCommands:
+    Description: 'Commands to deploy Lambda function'
+    Value: !Sub |
+      # Set environment variables
+      export LAMBDA_ROLE_ARN="${LambdaExecutionRole.Arn}"
+      export DYNAMODB_TABLE="${CallLogsTable}"
+      export SNS_TOPIC_ARN="${NotificationTopic}"
+      
+      # Create Lambda function
+      aws lambda create-function \
+        --function-name ${ProjectName}-handler \
+        --runtime python3.9 \
+        --role $LAMBDA_ROLE_ARN \
+        --handler lambda_function.lambda_handler \
+        --zip-file fileb://lambda.zip \
+        --timeout 30 \
+        --memory-size 256 \
+        --environment Variables="{\"DYNAMODB_TABLE\":\"$DYNAMODB_TABLE\",\"SNS_TOPIC_ARN\":\"$SNS_TOPIC_ARN\",\"AWS_REGION\":\"${AWS::Region}\"}" \
+        --region ${AWS::Region}
+      
+      # Add Alexa permission
+      aws lambda add-permission \
+        --function-name ${ProjectName}-handler \
+        --statement-id alexa-skill-trigger \
+        --action lambda:InvokeFunction \
+        --principal alexa-appkit.amazon.com \
+        --region ${AWS::Region}

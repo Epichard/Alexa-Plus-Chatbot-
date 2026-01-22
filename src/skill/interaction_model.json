@@ -1,0 +1,124 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "care assistant",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "HelpWakeWordIntent",
+          "samples": [
+            "help",
+            "emergency",
+            "urgent help",
+            "I need help",
+            "help me"
+          ]
+        },
+        {
+          "name": "NurseWakeWordIntent",
+          "slots": [
+            {
+              "name": "message",
+              "type": "AMAZON.SearchQuery"
+            },
+            {
+              "name": "caregiverName",
+              "type": "CaregiverNames"
+            }
+          ],
+          "samples": [
+            "nurse {message}",
+            "nurse I need {message}",
+            "nurse",
+            "{caregiverName} {message}",
+            "{caregiverName} I need {message}",
+            "{caregiverName}",
+            "I need {message}",
+            "can you get {message}",
+            "please bring {message}",
+            "I would like {message}"
+          ]
+        },
+        {
+          "name": "CaregiverConfirmIntent",
+          "samples": [
+            "ok",
+            "okay",
+            "got it",
+            "on my way",
+            "coming",
+            "received",
+            "acknowledged",
+            "yes",
+            "confirm",
+            "roger"
+          ]
+        },
+        {
+          "name": "StatusCheckIntent",
+          "samples": [
+            "status",
+            "check rooms",
+            "who needs help",
+            "pending calls",
+            "room status",
+            "system status"
+          ]
+        },
+        {
+          "name": "CancelCallIntent",
+          "samples": [
+            "cancel call",
+            "never mind",
+            "false alarm",
+            "all good now",
+            "cancel",
+            "stop calling"
+          ]
+        },
+        {
+          "name": "Alexa.Presentation.APL.UserEvent",
+          "samples": []
+        }
+      ],
+      "types": [
+        {
+          "name": "CaregiverNames",
+          "values": [
+            {
+              "name": {
+                "value": "Sarah"
+              }
+            },
+            {
+              "name": {
+                "value": "Mike"
+              }
+            },
+            {
+              "name": {
+                "value": "Lisa"
+              }
+            },
+            {
+              "name": {
+                "value": "nurse"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

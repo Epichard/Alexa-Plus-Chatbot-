@@ -1,0 +1,4 @@
+# file: C:\Users\palla\alexa-plus-chatbot-v2\src\fastapi\app\models\__init__.py
+# hypothesis_version: 6.150.2
+
+['CallEvent', 'CallEventCreate', 'CallEventUpdate', 'ResidentCreate', 'ResidentProfile', 'ResidentUpdate', 'SystemStatus', 'Token', 'TokenData', 'User', 'UserCreate', 'UserUpdate']

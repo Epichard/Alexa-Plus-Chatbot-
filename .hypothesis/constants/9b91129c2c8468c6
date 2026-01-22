@@ -1,0 +1,4 @@
+# file: C:\Users\palla\alexa-plus-chatbot-v2\src\fastapi\app\websocket\manager.py
+# hypothesis_version: 6.150.2
+
+['/call-status', '/live-updates', 'call_event', 'call_status_init', 'connected_at', 'connection_id', 'data', 'events', 'last_ping', 'message', 'ping', 'pong', 'resident_update', 'subscribe', 'subscriptions', 'system_status', 'timestamp', 'type', 'user_id']

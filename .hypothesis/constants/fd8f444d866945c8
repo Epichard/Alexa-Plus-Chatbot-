@@ -1,0 +1,4 @@
+# file: C:\Users\palla\alexa-plus-chatbot-v2\src\fastapi\app\models\call_event.py
+# hypothesis_version: 6.150.2
+
+['Current event status', 'Type of call event', 'acknowledged', 'active', 'emergency', 'nurse_comm', 'resolved', 'touch_call']
