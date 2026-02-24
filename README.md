@@ -2,6 +2,36 @@
 
 AI-powered call bell/intercom system for residential care homes using Echo Show devices. Now expanded with a modern web dashboard, real-time monitoring, and comprehensive management capabilities.
 
+---
+
+## ⚡ QUICK START FOR CLIENTS
+
+**Want to see it in action right now? Follow these 3 steps:**
+
+### 1️⃣ Start the Backend (Terminal 1)
+```bash
+cd Alexa-Plus-Chatbot-
+pip install -r requirements.txt
+cd src/fastapi
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+### 2️⃣ Start the Dashboard (Terminal 2)
+```bash
+cd Alexa-Plus-Chatbot-/src/dashboard
+npm install
+npm run dev
+```
+
+### 3️⃣ Open Your Browser
+- **Dashboard:** http://localhost:3000 (Login: admin / admin123)
+- **API Docs:** http://localhost:8000/docs
+- **Demo:** Open `demo/index.html` in your browser
+
+**📖 For detailed testing instructions, see [CLIENT_DEMO_GUIDE.md](CLIENT_DEMO_GUIDE.md)**
+
+---
+
 ## 📋 System Overview
 
 - **Capacity**: Up to 10 resident rooms + 1 main caregiver station
@@ -452,11 +482,21 @@ uvicorn app.main:app --reload --log-level debug
 
 # 📞 SUPPORT & DOCUMENTATION
 
+## 📚 Documentation Files
+
+- **🎬 CLIENT_DEMO_GUIDE.md** - Complete guide for client demonstrations and testing
+- **🧪 STEP_BY_STEP_TESTING.md** - Detailed step-by-step testing walkthrough
+- **📖 README.md** - This file - system overview and quick start
+- **🚀 DEPLOYMENT_GUIDE.md** - Production deployment instructions
+- **✅ TESTING_VERIFICATION.md** - Technical testing documentation
+- **📋 REQUIREMENTS_VERIFICATION.md** - Requirements coverage verification
+
+## 🎯 Quick Links
+
 - **Live Demo**: Open `demo/index.html` for interactive simulation
 - **API Documentation**: http://localhost:8000/docs (when running)
 - **System Architecture**: See `docs/` directory for detailed diagrams
-- **Deployment Guides**: See `DEPLOYMENT_GUIDE.md`
-- **Testing Guide**: See `TESTING_VERIFICATION.md`
+- **GitHub Repository**: https://github.com/pallavanand305/Alexa-Plus-Chatbot-.git
 
 ---
 
