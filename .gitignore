@@ -179,3 +179,19 @@ jspm_packages/
 # Temporary folders
 tmp/
 temp/
+
+# Kiro spec files (design, requirements, tasks)
+.kiro/
+
+# Non-essential documentation
+CLIENT_DEMO_GUIDE.md
+STEP_BY_STEP_TESTING.md
+PROJECT_COMPLETION_VERIFICATION.md
+SHOW_CLIENT_NOW.md
+SYSTEM_RUNNING.md
+TESTING_VERIFICATION.md
+PHASE_1_VERIFICATION.md
+PUSH_TO_EPICHARD_REPO.md
+REQUIREMENTS_VERIFICATION.md
+DEPLOYMENT_GUIDE.md
+QUICK_START.md
