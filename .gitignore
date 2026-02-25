@@ -22,6 +22,7 @@ wheels/
 
 # Virtual Environment
 venv/
+.venv/
 env/
 ENV/
 
@@ -53,6 +54,7 @@ Thumbs.db
 .coverage
 htmlcov/
 .pytest_cache/
+.hypothesis/
 
 # Node modules and React/Vite
 node_modules/
@@ -82,10 +84,10 @@ dist-ssr/
 .dmypy.json
 dmypy.json
 
-# Docker
-Dockerfile*
-docker-compose*.yml
-.dockerignore
+# Docker (keep Dockerfiles and docker-compose in repo)
+# Dockerfile*
+# docker-compose*.yml
+# .dockerignore
 
 # Temporary files
 *.tmp
